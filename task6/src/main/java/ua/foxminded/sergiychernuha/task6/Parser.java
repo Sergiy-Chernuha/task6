@@ -13,25 +13,10 @@ import java.util.Map;
 
 public class Parser {
 
-	public void makeListOfRacers() {
-//		List<Duration> lapsTime;
-		List<String> listStart = this.parseToLaps("start.log");
-		List<String> listEnd = this.parseToLaps("end.log");
-		Map<String, String> recerDescription = parseToAbbreviations("abbreviations.txt");
-//		getRacers(listStart, listEnd, recerDescription);
-
-//		System.out.println(recerDescription.get("VBM"));
-//		String timeLine1 = listStart.get(0).substring(3);
-//		String timeLine2 = listEnd.get(0).substring(3);
-//		String abr = listStart.get(0).substring(0, 3);
-//		System.out.println(abr);
-//		System.out.println(timeLine1);
-//		System.out.println(timeLine2);
-//		System.out.println(duration.toString());
-
-//	}
-//
-//	public void getRacers(List<String> listStart, List<String> listEnd, Map<String, String> recerDescription) {
+	public List<Racer> makeListOfRacers(String start, String finish, String abbreviation) {
+		List<String> listStart = this.parseToLaps(start);
+		List<String> listEnd = this.parseToLaps(finish);
+		Map<String, String> recerDescription = parseToAbbreviations(abbreviation);
 		List<String> localListStart = new ArrayList<>(listStart);
 		List<Duration> lapsTime = new ArrayList<>();
 		List<Racer> racers = new ArrayList<>();
@@ -49,17 +34,17 @@ public class Parser {
 				if (nameId.equals(timeStart.substring(0, 3))) {
 					lapsTime.add(calculationDurationLap(timeStart.substring(3), timeFinish.substring(3)));
 					localListStart.remove(timeStart);
-
 					break;
 				}
 			}
 			previousNameId = nameId;
 		}
 		racers.add(new Racer(previousNameId, lapsTime, recerDescription.get(previousNameId)));
-		System.out.println(racers.toString());
+
+		return racers;
 	}
 
-	public Duration calculationDurationLap(String start, String finish) {
+	private Duration calculationDurationLap(String start, String finish) {
 		DateTimeFormatter formatterInputDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss.SSS");
 		LocalDateTime startTime = LocalDateTime.parse(start, formatterInputDateTime);
 		LocalDateTime finishTime = LocalDateTime.parse(finish, formatterInputDateTime);
@@ -67,7 +52,7 @@ public class Parser {
 		return Duration.between(startTime, finishTime);
 	}
 
-	public List<String> parseToLaps(String fileName) {
+	private List<String> parseToLaps(String fileName) {
 		List<String> resultList = new ArrayList<>();
 
 		try (BufferedReader bF = new BufferedReader(new FileReader(fileName))) {
@@ -82,7 +67,7 @@ public class Parser {
 		return resultList;
 	}
 
-	public Map<String, String> parseToAbbreviations(String fileName) {
+	private Map<String, String> parseToAbbreviations(String fileName) {
 		Map<String, String> resultMap = new HashMap<>();
 
 		try (BufferedReader bF = new BufferedReader(new FileReader(fileName))) {
