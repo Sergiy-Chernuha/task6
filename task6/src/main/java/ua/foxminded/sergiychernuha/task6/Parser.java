@@ -16,7 +16,7 @@ public class Parser {
 	public List<Racer> makeListOfRacers(String start, String finish, String abbreviation) {
 		List<String> listStart = this.parseToLaps(start);
 		List<String> listEnd = this.parseToLaps(finish);
-		Map<String, String> recerDescription = parseToAbbreviations(abbreviation);
+		Map<String, String> racerDescription = parseToAbbreviations(abbreviation);
 		List<String> localListStart = new ArrayList<>(listStart);
 		List<Duration> lapsTime = new ArrayList<>();
 		List<Racer> racers = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Parser {
 			String nameId = timeFinish.substring(0, 3);
 
 			if (previousNameId != null && !previousNameId.equals(nameId)) {
-				racers.add(new Racer(previousNameId, lapsTime, recerDescription.get(previousNameId)));
+				racers.add(new Racer(previousNameId, lapsTime, racerDescription.get(previousNameId)));
 				lapsTime.clear();
 			}
 
@@ -39,9 +39,9 @@ public class Parser {
 			}
 			previousNameId = nameId;
 		}
-		racers.add(new Racer(previousNameId, lapsTime, recerDescription.get(previousNameId)));
+		racers.add(new Racer(previousNameId, lapsTime, racerDescription.get(previousNameId)));
 
-		return racers;
+		return addLoserRacers(racers,racerDescription);
 	}
 
 	private Duration calculationDurationLap(String start, String finish) {
@@ -50,6 +50,33 @@ public class Parser {
 		LocalDateTime finishTime = LocalDateTime.parse(finish, formatterInputDateTime);
 
 		return Duration.between(startTime, finishTime);
+	}
+
+	private List<Racer> addLoserRacers(List<Racer> racers, Map<String, String> racerDescription) {
+		List<Racer> everyRacers = new ArrayList<>(racers);
+		List<Duration> lapsTimeLoserRacer;
+
+		for (Map.Entry<String, String> oneRacer: racerDescription.entrySet()) {
+			if (notContaineKey(oneRacer.getKey(),racers)) {
+				lapsTimeLoserRacer = new ArrayList<>();
+				lapsTimeLoserRacer.add(Duration.ZERO);
+				everyRacers.add(new Racer(oneRacer.getKey(), lapsTimeLoserRacer, oneRacer.getValue()));
+			}
+		}
+
+		return everyRacers;
+	}
+	
+	private boolean notContaineKey(String key,List<Racer> racers) {
+		boolean result=true;
+		
+		for (Racer oneRacer:racers) {
+			if (oneRacer.getId().equals(key)) {
+				result=false;
+			}
+		}
+
+		return result;
 	}
 
 	private List<String> parseToLaps(String fileName) {
@@ -81,5 +108,4 @@ public class Parser {
 
 		return resultMap;
 	}
-
 }

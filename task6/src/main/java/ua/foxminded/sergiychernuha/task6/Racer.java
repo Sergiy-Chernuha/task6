@@ -20,12 +20,36 @@ public class Racer {
 		this.lapsTime = new ArrayList<>(lapsTime);
 		this.name = recerDescriptions[0];
 		this.teame = recerDescriptions[1];
-		this.bestLapTime = countBestLapTime(lapsTime);
-		this.avgLapTime = countAvgLapTime(lapsTime);
-		this.lapCount = lapsTime.size();
+		this.bestLapTime = calculateBestLapTime(lapsTime);
+		this.avgLapTime = calculateAvgLapTime(lapsTime);
+		this.lapCount = calculateLapCount(lapsTime);
 	}
 
-	private Duration countBestLapTime(List<Duration> lapsTime) {
+	public String getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getTeame() {
+		return teame;
+	}
+
+	public Duration getBestLapTime() {
+		return bestLapTime;
+	}
+
+	public Duration getAvgLapTime() {
+		return avgLapTime;
+	}
+
+	public int getLapCount() {
+		return lapCount;
+	}
+
+	private Duration calculateBestLapTime(List<Duration> lapsTime) {
 		Duration bestLap = lapsTime.get(0);
 
 		for (int i = 1; i < lapsTime.size(); i++) {
@@ -37,7 +61,7 @@ public class Racer {
 		return bestLap;
 	}
 
-	private Duration countAvgLapTime(List<Duration> lapsTime) {
+	private Duration calculateAvgLapTime(List<Duration> lapsTime) {
 		Duration avgLap = Duration.ofSeconds(0);
 
 		for (Duration lap : lapsTime) {
@@ -45,6 +69,16 @@ public class Racer {
 		}
 
 		return avgLap.dividedBy(lapsTime.size());
+	}
+
+	private int calculateLapCount(List<Duration> lapsTime) {
+		int result = 0;
+
+		if (!lapsTime.isEmpty() && lapsTime.get(0) != null && lapsTime.get(0).getNano() != 0) {
+			result = lapsTime.size();
+		}
+
+		return result;
 	}
 
 	@Override
