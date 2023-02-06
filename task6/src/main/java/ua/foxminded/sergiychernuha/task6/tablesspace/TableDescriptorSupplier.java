@@ -1,5 +1,7 @@
 package ua.foxminded.sergiychernuha.task6.tablesspace;
 
-public interface TableDescriptorSupplier {
+import java.util.function.Supplier;
+
+public interface TableDescriptorSupplier extends Supplier<TableDescriptor> {
 	TableType getType();
 }

@@ -41,7 +41,7 @@ public class Parser {
 		}
 		racers.add(new Racer(previousNameId, lapsTime, racerDescription.get(previousNameId)));
 
-		return addLoserRacers(racers,racerDescription);
+		return addLoserRacers(racers, racerDescription);
 	}
 
 	private Duration calculationDurationLap(String start, String finish) {
@@ -56,8 +56,8 @@ public class Parser {
 		List<Racer> everyRacers = new ArrayList<>(racers);
 		List<Duration> lapsTimeLoserRacer;
 
-		for (Map.Entry<String, String> oneRacer: racerDescription.entrySet()) {
-			if (notContaineKey(oneRacer.getKey(),racers)) {
+		for (Map.Entry<String, String> oneRacer : racerDescription.entrySet()) {
+			if (notContaineKey(oneRacer.getKey(), racers)) {
 				lapsTimeLoserRacer = new ArrayList<>();
 				lapsTimeLoserRacer.add(Duration.ZERO);
 				everyRacers.add(new Racer(oneRacer.getKey(), lapsTimeLoserRacer, oneRacer.getValue()));
@@ -66,13 +66,13 @@ public class Parser {
 
 		return everyRacers;
 	}
-	
-	private boolean notContaineKey(String key,List<Racer> racers) {
-		boolean result=true;
-		
-		for (Racer oneRacer:racers) {
+
+	private boolean notContaineKey(String key, List<Racer> racers) {
+		boolean result = true;
+
+		for (Racer oneRacer : racers) {
 			if (oneRacer.getId().equals(key)) {
-				result=false;
+				result = false;
 			}
 		}
 

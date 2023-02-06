@@ -1,6 +1,8 @@
 package ua.foxminded.sergiychernuha.task6;
 
 import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +43,16 @@ public class Racer {
 		return bestLapTime;
 	}
 
+	public String getBestLapTimeByString() {
+		return parseToString(bestLapTime);
+	}
+
 	public Duration getAvgLapTime() {
 		return avgLapTime;
+	}
+
+	public String getAvgLapTimeByString() {
+		return parseToString(avgLapTime);
 	}
 
 	public int getLapCount() {
@@ -81,12 +91,19 @@ public class Racer {
 		return result;
 	}
 
+	public static String parseToString(Duration inputDuration) {
+		LocalTime zeroTime = LocalTime.MIDNIGHT;
+		DateTimeFormatter dtm = DateTimeFormatter.ofPattern("m:ss.SSS");
+
+		return zeroTime.plus(inputDuration.abs()).format(dtm);
+	}
+
 	@Override
 	public String toString() {
 		return "\nRacer [id=" + id + ", name=" + name + ", teame=" + teame + ", lapsTime=" + lapsTime + ", bestLapTime="
 				+ bestLapTime + ", avgLapTime=" + avgLapTime + ", lapCount=" + lapCount + "]";
 	}
 
-//	del new line every  string
+//	del new line every  string or all method
 
 }
