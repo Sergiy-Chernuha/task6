@@ -1,8 +1,8 @@
 package ua.foxminded.sergiychernuha.task6.columnsspace;
 
 public enum ColumnType {
-	NUMBEROFCOLUMN("Number"), NAMECOLUMN("Name"), TEAMCOLUMN("Team"), LAPCOUNTCOLUMN("Lap Count"),
-	BESTLAPCOLUMN("Best Lap Time"), AVGLAPCOLUMN("AVG Lap Time");
+	NAMECOLUMN("Name"), TEAMCOLUMN("Team"), LAPCOUNTCOLUMN("Lap Count"), BESTLAPCOLUMN("Best Lap Time"),
+	AVGLAPCOLUMN("AVG Lap Time");
 
 	String name;
 

@@ -8,5 +8,4 @@ public interface TableDescriptor {
 	String getTitle();
 	 List<ColumnType> getColumns();
 	 ColumnType getDefaultSortColumnType();
-
 }

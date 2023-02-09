@@ -7,11 +7,10 @@ import ua.foxminded.sergiychernuha.task6.columnsspace.Column;
 import ua.foxminded.sergiychernuha.task6.columnsspace.ColumnType;
 
 public class TeamColumn implements Column {
-	ColumnType columnType;
 
 	@Override
 	public String getTitle() {
-		return columnType.name();
+		return ColumnType.TEAMCOLUMN.getName();
 	}
 
 	@Override

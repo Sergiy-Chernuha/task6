@@ -7,11 +7,10 @@ import ua.foxminded.sergiychernuha.task6.columnsspace.Column;
 import ua.foxminded.sergiychernuha.task6.columnsspace.ColumnType;
 
 public class BestLapColumn implements Column {
-	ColumnType columnType;
 
 	@Override
 	public String getTitle() {
-		return columnType.name();
+		return ColumnType.BESTLAPCOLUMN.getName();
 	}
 
 	@Override
@@ -21,6 +20,6 @@ public class BestLapColumn implements Column {
 
 	@Override
 	public Comparator<Racer> getComparator() {
-		return (racer1, racer2) -> Integer.compare(racer1.getBestLapTime().getNano(), racer2.getBestLapTime().getNano());
+		return (racer1, racer2) -> racer1.getBestLapTime().compareTo(racer2.getBestLapTime());
 	}
 }

@@ -8,22 +8,19 @@ import ua.foxminded.sergiychernuha.task6.tablesspace.TableDescriptor;
 import ua.foxminded.sergiychernuha.task6.tablesspace.TableType;
 
 public class BestLapTableDescriptor implements TableDescriptor {
-	String title = TableType.BESTLAPTABLE.getName();
-	List<ColumnType> columns = Arrays.asList(ColumnType.NUMBEROFCOLUMN,ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.BESTLAPCOLUMN);
-	ColumnType defaultSortColumnType = ColumnType.BESTLAPCOLUMN;
 
 	@Override
 	public String getTitle() {
-		return title;
+		return TableType.BESTLAPTABLE.getName();
 	}
 
 	@Override
 	public List<ColumnType> getColumns() {
-		return columns;
+		return Arrays.asList(ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.BESTLAPCOLUMN);
 	}
 
 	@Override
 	public ColumnType getDefaultSortColumnType() {
-		return defaultSortColumnType;
+		return ColumnType.BESTLAPCOLUMN;
 	}
 }

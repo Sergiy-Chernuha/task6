@@ -7,11 +7,10 @@ import ua.foxminded.sergiychernuha.task6.columnsspace.Column;
 import ua.foxminded.sergiychernuha.task6.columnsspace.ColumnType;
 
 public class LapCountColumn implements Column {
-	ColumnType columnType;
 
 	@Override
 	public String getTitle() {
-		return columnType.name();
+		return ColumnType.LAPCOUNTCOLUMN.getName();
 	}
 
 	@Override
@@ -21,6 +20,6 @@ public class LapCountColumn implements Column {
 
 	@Override
 	public Comparator<Racer> getComparator() {
-		return (racer1, racer2) -> Integer.compare(racer1.getLapCount(), racer2.getLapCount());
+		return (racer1, racer2) -> Integer.compare(racer2.getLapCount(), racer1.getLapCount());
 	}
 }

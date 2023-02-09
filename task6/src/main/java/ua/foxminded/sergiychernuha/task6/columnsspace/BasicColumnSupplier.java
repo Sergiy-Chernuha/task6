@@ -1,26 +1,25 @@
 package ua.foxminded.sergiychernuha.task6.columnsspace;
 
-import ua.foxminded.sergiychernuha.task6.tablesspace.TableType;
+import ua.foxminded.sergiychernuha.task6.TableProcessor;
+import ua.foxminded.sergiychernuha.task6.tablesspace.TableDescriptor;
 
-public class BasicColumnSupplier implements ColumnSupplier{
+public class BasicColumnSupplier implements ColumnSupplier {
+	int index;
+	TableDescriptor tableType;
+
+	public BasicColumnSupplier(TableDescriptor tableType, int index) {
+		super();
+		this.index = index;
+		this.tableType = tableType;
+	}
 
 	@Override
 	public ColumnType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return TableProcessor.defineSortColumnByIndex(tableType, index);
 	}
 
 	@Override
 	public Column get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getSortingChange(TableType tableType) {
-		StringBuilder result= new StringBuilder();
-		result.append("Default sorting is "
-				+tableType+ "\nDo you want change sorting? Input 1, if yes");
-		
-		return result.toString();
+		return ColumnFactory.getColumn(getType());
 	}
 }

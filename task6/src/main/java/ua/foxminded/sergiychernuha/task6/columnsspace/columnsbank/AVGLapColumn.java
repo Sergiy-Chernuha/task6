@@ -7,11 +7,10 @@ import ua.foxminded.sergiychernuha.task6.columnsspace.Column;
 import ua.foxminded.sergiychernuha.task6.columnsspace.ColumnType;
 
 public class AVGLapColumn implements Column {
-	ColumnType columnType;
 
 	@Override
 	public String getTitle() {
-		return columnType.name();
+		return ColumnType.AVGLAPCOLUMN.getName();
 	}
 
 	@Override
@@ -21,6 +20,6 @@ public class AVGLapColumn implements Column {
 
 	@Override
 	public Comparator<Racer> getComparator() {
-		return (racer1, racer2) -> Integer.compare(racer1.getAvgLapTime().getNano(), racer2.getAvgLapTime().getNano());
+		return (racer1, racer2) -> racer1.getAvgLapTime().compareTo(racer1.getAvgLapTime());
 	}
 }

@@ -8,22 +8,19 @@ import ua.foxminded.sergiychernuha.task6.tablesspace.TableDescriptor;
 import ua.foxminded.sergiychernuha.task6.tablesspace.TableType;
 
 public class NameTableDescriptor implements TableDescriptor {
-	String title = TableType.NAMETABLE.getName();
-	List<ColumnType> columns = Arrays.asList(ColumnType.NUMBEROFCOLUMN,ColumnType.NAMECOLUMN);
-	ColumnType defaultSortColumnType = ColumnType.NAMECOLUMN;
 
 	@Override
 	public String getTitle() {
-		return title;
+		return TableType.NAMETABLE.getName();
 	}
 
 	@Override
 	public List<ColumnType> getColumns() {
-		return columns;
+		return Arrays.asList(ColumnType.NAMECOLUMN);
 	}
 
 	@Override
 	public ColumnType getDefaultSortColumnType() {
-		return defaultSortColumnType;
+		return ColumnType.NAMECOLUMN;
 	}
 }

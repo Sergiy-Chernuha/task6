@@ -8,22 +8,19 @@ import ua.foxminded.sergiychernuha.task6.tablesspace.TableDescriptor;
 import ua.foxminded.sergiychernuha.task6.tablesspace.TableType;
 
 public class AvgLapDescriptor implements TableDescriptor {
-	String title = TableType.AVGLAPTABLE.getName();
-	List<ColumnType> columns = Arrays.asList(ColumnType.NUMBEROFCOLUMN,ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.AVGLAPCOLUMN);
-	ColumnType defaultSortColumnType = ColumnType.AVGLAPCOLUMN;
 
 	@Override
 	public String getTitle() {
-		return title;
+		return TableType.AVGLAPTABLE.getName();
 	}
 
 	@Override
 	public List<ColumnType> getColumns() {
-		return columns;
+		return Arrays.asList(ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.AVGLAPCOLUMN);
 	}
 
 	@Override
 	public ColumnType getDefaultSortColumnType() {
-		return defaultSortColumnType;
+		return ColumnType.AVGLAPCOLUMN;
 	}
 }

@@ -8,22 +8,19 @@ import ua.foxminded.sergiychernuha.task6.tablesspace.TableDescriptor;
 import ua.foxminded.sergiychernuha.task6.tablesspace.TableType;
 
 public class LapCountDescriptor implements TableDescriptor {
-	String title = TableType.LAPCOUNTTABLE.getName();
-	List<ColumnType> columns = Arrays.asList(ColumnType.NUMBEROFCOLUMN,ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.LAPCOUNTCOLUMN);
-	ColumnType defaultSortColumnType = ColumnType.LAPCOUNTCOLUMN;
 
 	@Override
 	public String getTitle() {
-		return title;
+		return TableType.LAPCOUNTTABLE.getName();
 	}
 
 	@Override
 	public List<ColumnType> getColumns() {
-		return columns;
+		return Arrays.asList(ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.LAPCOUNTCOLUMN);
 	}
 
 	@Override
 	public ColumnType getDefaultSortColumnType() {
-		return defaultSortColumnType;
+		return ColumnType.LAPCOUNTCOLUMN;
 	}
 }
