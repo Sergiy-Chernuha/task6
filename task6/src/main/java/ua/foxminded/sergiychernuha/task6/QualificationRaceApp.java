@@ -34,6 +34,7 @@ public class QualificationRaceApp {
 			System.out.println(e.getMessage());
 		}
 		TableBuilder resultTable = new TableBuilder(ourTable, listOfRacers);
-		System.out.println(resultTable.buildTable());
+
+		System.out.println(resultTable.buildTableByStream());
 	}
 }

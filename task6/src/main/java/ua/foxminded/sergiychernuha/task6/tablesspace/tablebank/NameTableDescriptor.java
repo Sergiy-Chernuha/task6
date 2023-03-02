@@ -16,7 +16,7 @@ public class NameTableDescriptor implements TableDescriptor {
 
 	@Override
 	public List<ColumnType> getColumns() {
-		return Arrays.asList(ColumnType.NAMECOLUMN);
+		return Arrays.asList(ColumnType.NUMBERCOLUMN, ColumnType.NAMECOLUMN);
 	}
 
 	@Override

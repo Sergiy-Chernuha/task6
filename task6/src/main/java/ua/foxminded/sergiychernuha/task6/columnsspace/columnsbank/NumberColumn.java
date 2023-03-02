@@ -6,16 +6,16 @@ import ua.foxminded.sergiychernuha.task6.Racer;
 import ua.foxminded.sergiychernuha.task6.columnsspace.Column;
 import ua.foxminded.sergiychernuha.task6.columnsspace.ColumnType;
 
-public class BestLapColumn implements Column {
+public class NumberColumn implements Column {
 
 	@Override
 	public String getTitle() {
-		return ColumnType.BESTLAPCOLUMN.getName();
+		return ColumnType.NUMBERCOLUMN.getName();
 	}
 
 	@Override
 	public String getData(Racer racer) {
-		return racer.getBestLapTimeByString();
+		return "";
 	}
 
 	@Override

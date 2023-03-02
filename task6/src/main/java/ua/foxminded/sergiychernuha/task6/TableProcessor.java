@@ -12,6 +12,7 @@ public class TableProcessor {
 	private TableDescriptor tableDescriptor;
 	private Column sortColumn;
 	private Comparator<Racer> sortingDirection;
+	private int dividerAfterRowOnBestLapTable = -1;
 
 	public TableProcessor() {
 		super();
@@ -39,6 +40,14 @@ public class TableProcessor {
 
 	public void setSortingDirection(Comparator<Racer> sortingDirection) {
 		this.sortingDirection = sortingDirection;
+	}
+
+	public int getDividerAfterRowOnBestLapTable() {
+		return dividerAfterRowOnBestLapTable;
+	}
+
+	public void setDividerAfterRowOnBestLapTable(int dividerAfterRowOnBestLapTable) {
+		this.dividerAfterRowOnBestLapTable = dividerAfterRowOnBestLapTable;
 	}
 
 	public String getTableTypeRequest() {
@@ -75,8 +84,10 @@ public class TableProcessor {
 		result.append("Select index of sorting column(some other number for default):" + "\n");
 
 		for (ColumnType s : tableType.getColumns()) {
-			result.append(i + ". " + s.getName() + ";\n");
-			i++;
+			if (s != ColumnType.NUMBERCOLUMN) {
+				result.append(i + ". " + s.getName() + ";\n");
+				i++;
+			}
 		}
 
 		return result.toString();
@@ -86,10 +97,12 @@ public class TableProcessor {
 		int i = 1;
 
 		for (ColumnType s : tableType.getColumns()) {
-			if (index == i) {
-				return s;
+			if (s != ColumnType.NUMBERCOLUMN) {
+				if (index == i) {
+					return s;
+				}
+				i++;
 			}
-			i++;
 		}
 
 		return tableType.getDefaultSortColumnType();
@@ -118,8 +131,16 @@ public class TableProcessor {
 		return "Default sorting is " + defaultSort + "\nInput 1, if you want reverse sorting";
 	}
 
-	public Comparator<Racer> defineSortingDirection(Column column, int index) {
-		Comparator<Racer> comparator = column.getComparator();
+	public Comparator<Racer> defineSortingDirection(Column sortColumn, int index) {
+		Comparator<Racer> comparator = sortColumn.getComparator();
+
+		if (sortColumn.getTitle().equals("Best Lap Time")) {
+			setDividerAfterRowOnBestLapTable(1);
+
+			if (index == 1) {
+				setDividerAfterRowOnBestLapTable(2);
+			}
+		}
 
 		return (index == 1) ? comparator.reversed() : comparator;
 	}

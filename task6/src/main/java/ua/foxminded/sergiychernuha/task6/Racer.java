@@ -40,7 +40,7 @@ public class Racer {
 	}
 
 	public Duration getBestLapTime() {
-		return bestLapTime;
+		return (bestLapTime == Duration.ZERO ? Duration.ofDays(1) : bestLapTime);
 	}
 
 	public String getBestLapTimeByString() {
@@ -48,7 +48,7 @@ public class Racer {
 	}
 
 	public Duration getAvgLapTime() {
-		return avgLapTime;
+		return (avgLapTime == Duration.ZERO ? Duration.ofDays(1) : avgLapTime);
 	}
 
 	public String getAvgLapTimeByString() {
@@ -72,7 +72,7 @@ public class Racer {
 	}
 
 	private Duration calculateAvgLapTime(List<Duration> lapsTime) {
-		Duration avgLap = Duration.ofSeconds(0);
+		Duration avgLap = Duration.ZERO;
 
 		for (Duration lap : lapsTime) {
 			avgLap = avgLap.plus(lap);
@@ -95,6 +95,6 @@ public class Racer {
 		LocalTime zeroTime = LocalTime.MIDNIGHT;
 		DateTimeFormatter dtm = DateTimeFormatter.ofPattern("m:ss.SSS");
 
-		return zeroTime.plus(inputDuration.abs()).format(dtm);
+		return (inputDuration != Duration.ZERO) ? zeroTime.plus(inputDuration.abs()).format(dtm) : "-:--.---";
 	}
 }

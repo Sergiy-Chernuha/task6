@@ -20,6 +20,6 @@ public class AVGLapColumn implements Column {
 
 	@Override
 	public Comparator<Racer> getComparator() {
-		return (racer1, racer2) -> racer1.getAvgLapTime().compareTo(racer1.getAvgLapTime());
+		return Comparator.comparing(Racer::getAvgLapTime);
 	}
 }

@@ -16,7 +16,8 @@ public class LapCountDescriptor implements TableDescriptor {
 
 	@Override
 	public List<ColumnType> getColumns() {
-		return Arrays.asList(ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.LAPCOUNTCOLUMN);
+		return Arrays.asList(ColumnType.NUMBERCOLUMN, ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN,
+				ColumnType.LAPCOUNTCOLUMN);
 	}
 
 	@Override

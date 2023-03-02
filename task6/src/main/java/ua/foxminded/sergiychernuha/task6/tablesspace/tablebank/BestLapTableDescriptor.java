@@ -16,7 +16,8 @@ public class BestLapTableDescriptor implements TableDescriptor {
 
 	@Override
 	public List<ColumnType> getColumns() {
-		return Arrays.asList(ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN, ColumnType.BESTLAPCOLUMN);
+		return Arrays.asList(ColumnType.NUMBERCOLUMN, ColumnType.NAMECOLUMN, ColumnType.TEAMCOLUMN,
+				ColumnType.BESTLAPCOLUMN);
 	}
 
 	@Override

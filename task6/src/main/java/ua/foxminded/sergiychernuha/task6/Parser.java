@@ -1,22 +1,23 @@
 package ua.foxminded.sergiychernuha.task6;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Parser {
 
-	public List<Racer> makeListOfRacers(String start, String finish, String abbreviation) {
-		List<String> listStart = this.parseToLaps(start);
-		List<String> listEnd = this.parseToLaps(finish);
-		Map<String, String> racerDescription = parseToAbbreviations(abbreviation);
+	public List<Racer> makeListOfRacers(String startFileName, String finishFileName, String abbreviationFileName) {
+		List<String> listStart = parseToLines(startFileName);
+		List<String> listEnd = parseToLines(finishFileName);
+		Map<String, String> racerDescription = parseListToMap(parseToLines(abbreviationFileName));
 		List<String> localListStart = new ArrayList<>(listStart);
 		List<Duration> lapsTime = new ArrayList<>();
 		List<Racer> racers = new ArrayList<>();
@@ -79,33 +80,21 @@ public class Parser {
 		return result;
 	}
 
-	private List<String> parseToLaps(String fileName) {
-		List<String> resultList = new ArrayList<>();
+	private List<String> parseToLines(String fileName) {
+		ClassLoader classLoader = getClass().getClassLoader();
 
-		try (BufferedReader bF = new BufferedReader(new FileReader(fileName))) {
-			String line;
-			while ((line = bF.readLine()) != null) {
-				resultList.add(line);
+		try (InputStream is = classLoader.getResourceAsStream(fileName)) {
+			if (is == null)
+				throw new IllegalArgumentException("File " + fileName + " not exists in resources");
+			try (InputStreamReader isr = new InputStreamReader(is); BufferedReader reader = new BufferedReader(isr)) {
+				return reader.lines().collect(Collectors.toList());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException("Unable to read file " + fileName);
 		}
-
-		return resultList;
 	}
 
-	private Map<String, String> parseToAbbreviations(String fileName) {
-		Map<String, String> resultMap = new HashMap<>();
-
-		try (BufferedReader bF = new BufferedReader(new FileReader(fileName))) {
-			String line;
-			while ((line = bF.readLine()) != null) {
-				resultMap.put(line.substring(0, 3), line.substring(4));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return resultMap;
+	private Map<String, String> parseListToMap(List<String> list) {
+		return list.stream().collect(Collectors.toMap(x -> x.substring(0, 3), x -> x.substring(4)));
 	}
 }
