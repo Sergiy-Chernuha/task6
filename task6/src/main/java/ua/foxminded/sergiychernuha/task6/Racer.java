@@ -3,23 +3,20 @@ package ua.foxminded.sergiychernuha.task6;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Racer {
-	String id;
-	String name;
-	String teame;
-	List<Duration> lapsTime;
-	Duration bestLapTime;
-	Duration avgLapTime;
-	int lapCount;
+	private String id;
+	private String name;
+	private String teame;
+	private Duration bestLapTime;
+	private Duration avgLapTime;
+	private int lapCount;
 
 	public Racer(String id, List<Duration> lapsTime, String recerDescription) {
 		super();
 		String[] recerDescriptions = recerDescription.split("_");
 		this.id = id;
-		this.lapsTime = new ArrayList<>(lapsTime);
 		this.name = recerDescriptions[0];
 		this.teame = recerDescriptions[1];
 		this.bestLapTime = calculateBestLapTime(lapsTime);
@@ -91,7 +88,7 @@ public class Racer {
 		return result;
 	}
 
-	public String parseToString(Duration inputDuration) {
+	private String parseToString(Duration inputDuration) {
 		LocalTime zeroTime = LocalTime.MIDNIGHT;
 		DateTimeFormatter dtm = DateTimeFormatter.ofPattern("m:ss.SSS");
 

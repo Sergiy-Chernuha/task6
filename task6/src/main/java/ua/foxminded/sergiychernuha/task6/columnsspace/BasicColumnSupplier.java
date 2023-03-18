@@ -4,8 +4,8 @@ import ua.foxminded.sergiychernuha.task6.TableProcessor;
 import ua.foxminded.sergiychernuha.task6.tablesspace.TableDescriptor;
 
 public class BasicColumnSupplier implements ColumnSupplier {
-	int index;
-	TableDescriptor tableType;
+	private int index;
+	private TableDescriptor tableType;
 
 	public BasicColumnSupplier(TableDescriptor tableType, int index) {
 		super();

@@ -17,11 +17,15 @@ public class TableBuilder {
 	private Comparator<Racer> sortingRule;
 	private List<Racer> racers;
 	private int dividerAfterRowOnBestLapTable;
+	
+	public TableBuilder() {
+		super();
+	}
 
 	public TableBuilder(TableProcessor tableProcessor, List<Racer> racers) {
 		super();
 		this.tableDescriptor = tableProcessor.getTableDescriptor();
-		this.columns = this.tableDescriptor.getColumns();
+		this.columns = tableDescriptor.getColumns();
 		this.sortingRule = tableProcessor.getSortingDirection();
 		this.racers = racers;
 		this.dividerAfterRowOnBestLapTable = tableProcessor.getDividerAfterRowOnBestLapTable();
