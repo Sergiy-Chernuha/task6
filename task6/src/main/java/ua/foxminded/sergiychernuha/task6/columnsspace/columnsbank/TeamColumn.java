@@ -20,6 +20,6 @@ public class TeamColumn implements Column {
 
 	@Override
 	public Comparator<Racer> getComparator() {
-		return (racer1, racer2) -> racer1.getTeame().compareTo(racer2.getTeame());
+		return Comparator.comparing(Racer::getTeame);
 	}
 }

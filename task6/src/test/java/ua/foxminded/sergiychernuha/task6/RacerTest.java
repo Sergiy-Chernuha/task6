@@ -1,9 +1,7 @@
 package ua.foxminded.sergiychernuha.task6;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +14,12 @@ class RacerTest {
 	@Test
 	void whanRecerDescriptionIsNull_thenThrowNullPointerException() {
 		String id = "asdf";
-		List<Duration> lapsTime = new ArrayList<>();
+		List<Lap> laps = new ArrayList<>();
 		String racerDescription = null;
 
-		lapsTime.add(Duration.ZERO);
+		laps.add(null);
 
-		assertThrowsExactly(NullPointerException.class, () -> new Racer(id, lapsTime, racerDescription));
+		assertThrowsExactly(NullPointerException.class, () -> new Racer(id, laps, racerDescription));
 	}
 
 	@ParameterizedTest
@@ -29,49 +27,19 @@ class RacerTest {
 	void whanRecerDescriptionNotContainDilimeterOrNothignAfterDelimeter_thenThrowArrayIndexOutOfBoundsException(
 			String racerDescription) {
 		String id = "asdf";
-		List<Duration> lapsTime = new ArrayList<>();
+		List<Lap> laps = new ArrayList<>();
 
-		lapsTime.add(Duration.ZERO);
+		laps.add(null);
 
-		assertThrowsExactly(ArrayIndexOutOfBoundsException.class, () -> new Racer(id, lapsTime, racerDescription));
+		assertThrowsExactly(ArrayIndexOutOfBoundsException.class, () -> new Racer(id, laps, racerDescription));
 	}
 
 	@Test
 	void whanLapsTimeIsNull_thenThrowNullPointerException() {
 		String id = "asdf";
-		List<Duration> lapsTime = null;
+		List<Lap> laps = null;
 		String racerDescription = "aaa_bbb";
 
-		assertThrowsExactly(NullPointerException.class, () -> new Racer(id, lapsTime, racerDescription));
+		assertThrowsExactly(NullPointerException.class, () -> new Racer(id, laps, racerDescription));
 	}
-
-	@Test
-	void whanLapsTimeIsEmptyList_thenThrowIndexOutOfBoundsException() {
-		String id = "asdf";
-		List<Duration> lapsTime = new ArrayList<>();
-		String racerDescription = "aaa_bbb";
-
-		assertThrowsExactly(IndexOutOfBoundsException.class, () -> new Racer(id, lapsTime, racerDescription));
-	}
-
-	@Test
-	void whanBestLapTimeEqualsZero_thenMethodGetBestLapTimeByStringReturnDefaultString() {
-		List<Duration> lapsTime = new ArrayList<>();
-		lapsTime.add(Duration.ZERO);
-		Racer recer = new Racer("asdf", lapsTime, "aaa_bbb");
-		String expected="-:--.---";
-
-		assertEquals(expected, recer.getBestLapTimeByString());
-	}
-	
-	@Test
-	void whanBestLapTimeEqualsNotZero_thenMethodGetBestLapTimeByStringReturnThisTimeOnOurFormat() {
-		List<Duration> lapsTime = new ArrayList<>();
-		lapsTime.add(Duration.ofMillis(333));
-		Racer recer = new Racer("asdf", lapsTime, "aaa_bbb");
-		String expected="0:00.333";
-		
-		assertEquals(expected, recer.getBestLapTimeByString());
-	}
-
 }

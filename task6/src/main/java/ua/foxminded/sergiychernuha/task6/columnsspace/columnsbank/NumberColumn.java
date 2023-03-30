@@ -20,6 +20,6 @@ public class NumberColumn implements Column {
 
 	@Override
 	public Comparator<Racer> getComparator() {
-		return Comparator.comparing(Racer::getBestLapTime);
+		return Comparator.comparing(Racer::getName);
 	}
 }

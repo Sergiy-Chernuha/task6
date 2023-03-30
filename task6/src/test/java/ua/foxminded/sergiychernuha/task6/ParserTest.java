@@ -56,9 +56,7 @@ class ParserTest {
 		assertEquals("VBM", listOfRacers.get(indexRacer).getId());
 		assertEquals("Valtteri Bottas", listOfRacers.get(indexRacer).getName());
 		assertEquals("MERCEDES", listOfRacers.get(indexRacer).getTeame());
-		assertEquals(3, listOfRacers.get(indexRacer).getLapCount());
-		assertEquals("1:25.750", listOfRacers.get(indexRacer).getBestLapTimeByString());
-		assertEquals("1:25.505", listOfRacers.get(indexRacer).getAvgLapTimeByString());
+		assertEquals(3, listOfRacers.get(indexRacer).getLaps().size());
 	}
 
 	@Test
@@ -69,11 +67,9 @@ class ParserTest {
 		List<Racer> listOfRacers = parser.makeListOfRacers(startFileName, finishFileName, abbreviationFileName);
 		int indexRacer = listOfRacers.size() - 1;
 
-		assertEquals("RKW", listOfRacers.get(indexRacer).getId());
-		assertEquals("Robert Kubica", listOfRacers.get(indexRacer).getName());
-		assertEquals("WILLIAMS MERCEDES", listOfRacers.get(indexRacer).getTeame());
-		assertEquals(0, listOfRacers.get(indexRacer).getLapCount());
-		assertEquals("-:--.---", listOfRacers.get(indexRacer).getBestLapTimeByString());
-		assertEquals("-:--.---", listOfRacers.get(indexRacer).getAvgLapTimeByString());
+		assertEquals("RGH", listOfRacers.get(indexRacer).getId());
+		assertEquals("Romain Grosjean", listOfRacers.get(indexRacer).getName());
+		assertEquals("HAAS FERRARI", listOfRacers.get(indexRacer).getTeame());
+		assertEquals(2, listOfRacers.get(indexRacer).getLaps().size());
 	}
 }

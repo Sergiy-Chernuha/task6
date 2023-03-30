@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,71 +12,50 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Parser {
-
 	public List<Racer> makeListOfRacers(String startFileName, String finishFileName, String abbreviationFileName) {
 		List<String> listStart = parseToLines(startFileName);
 		List<String> listEnd = parseToLines(finishFileName);
 		Map<String, String> racerDescription = parseListToMap(parseToLines(abbreviationFileName));
-		List<String> localListStart = new ArrayList<>(listStart);
-		List<Duration> lapsTime = new ArrayList<>();
+		List<String> localFinishList = new ArrayList<>(listEnd);
+
+		List<Lap> laps = new ArrayList<>();
 		List<Racer> racers = new ArrayList<>();
 		String previousNameId = null;
 
-		for (String timeFinish : listEnd) {
-			String nameId = timeFinish.substring(0, 3);
-
+		for (String startTime : listStart) {
+			String nameId = startTime.substring(0, 3);
 			if (previousNameId != null && !previousNameId.equals(nameId)) {
-				racers.add(new Racer(previousNameId, lapsTime, racerDescription.get(previousNameId)));
-				lapsTime.clear();
+				racers.add(new Racer(previousNameId, laps, racerDescription.get(previousNameId)));
+				laps.clear();
 			}
 
-			for (String timeStart : localListStart) {
-				if (nameId.equals(timeStart.substring(0, 3))) {
-					lapsTime.add(calculationDurationLap(timeStart.substring(3), timeFinish.substring(3)));
-					localListStart.remove(timeStart);
+			int i = 0;
+			for (String finishTime : localFinishList) {
+				if (nameId.equals(finishTime.substring(0, 3))) {
+					laps.add(calculationLap(startTime.substring(3), finishTime.substring(3)));
+					localFinishList.remove(finishTime);
 					break;
+				}
+				i++;
+				if (i == localFinishList.size() && laps.isEmpty()) {
+					laps.add(calculationLap(startTime.substring(3), ""));
 				}
 			}
 			previousNameId = nameId;
 		}
-		racers.add(new Racer(previousNameId, lapsTime, racerDescription.get(previousNameId)));
 
-		return addLoserRacers(racers, racerDescription);
+		racers.add(new Racer(previousNameId, laps, racerDescription.get(previousNameId)));
+
+		return racers;
 	}
 
-	private Duration calculationDurationLap(String start, String finish) {
+	private Lap calculationLap(String start, String finish) {
 		DateTimeFormatter formatterInputDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss.SSS");
 		LocalDateTime startTime = LocalDateTime.parse(start, formatterInputDateTime);
-		LocalDateTime finishTime = LocalDateTime.parse(finish, formatterInputDateTime);
+		LocalDateTime finishTime = finish.equals("") ? LocalDateTime.MAX
+				: LocalDateTime.parse(finish, formatterInputDateTime);
 
-		return Duration.between(startTime, finishTime);
-	}
-
-	private List<Racer> addLoserRacers(List<Racer> racers, Map<String, String> racerDescription) {
-		List<Racer> everyRacers = new ArrayList<>(racers);
-		List<Duration> lapsTimeLoserRacer;
-
-		for (Map.Entry<String, String> oneRacer : racerDescription.entrySet()) {
-			if (notContaineKey(oneRacer.getKey(), racers)) {
-				lapsTimeLoserRacer = new ArrayList<>();
-				lapsTimeLoserRacer.add(Duration.ZERO);
-				everyRacers.add(new Racer(oneRacer.getKey(), lapsTimeLoserRacer, oneRacer.getValue()));
-			}
-		}
-
-		return everyRacers;
-	}
-
-	private boolean notContaineKey(String key, List<Racer> racers) {
-		boolean result = true;
-
-		for (Racer oneRacer : racers) {
-			if (oneRacer.getId().equals(key)) {
-				result = false;
-			}
-		}
-
-		return result;
+		return new Lap(startTime, finishTime);
 	}
 
 	private List<String> parseToLines(String fileName) {

@@ -20,6 +20,6 @@ public class NameColumn implements Column {
 
 	@Override
 	public Comparator<Racer> getComparator() {
-		return (racer1, racer2) -> racer1.getName().compareTo(racer2.getName());
+		return Comparator.comparing(Racer::getName);
 	}
 }

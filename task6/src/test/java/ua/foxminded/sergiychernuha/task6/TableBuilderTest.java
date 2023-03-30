@@ -39,7 +39,7 @@ class TableBuilderTest {
 	void init() {
 		when(tableProcessor.getTableDescriptor()).thenReturn(tableDescriptor);
 		when(tableDescriptor.getColumns()).thenReturn(columns);
-		when(tableProcessor.getSortingDirection()).thenReturn(Comparator.comparing(Racer::getBestLapTime));
+		when(tableProcessor.getSortingDirection()).thenReturn(Comparator.comparing(ParserFunctions.BESTDURATION));
 		when(tableProcessor.getDividerAfterRowOnBestLapTable()).thenReturn(-1);
 		tableBuilder = new TableBuilder(tableProcessor, racers);
 	}
